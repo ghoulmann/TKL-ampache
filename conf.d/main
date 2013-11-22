@@ -1,0 +1,39 @@
+#!/bin/bash -ex
+share=/srv/ampache
+ampache_src=https://github.com/ampache/ampache/archive/master.tar.gz
+#Start MySQL Daemon
+/etc/init.d/mysql start
+/etc/init.d/apache2 start
+#create dir for samba share
+mkdir $share
+
+#Set permissions for samba share
+chmod 777 $share
+
+#Deal with Ampache
+wget $ampache_src -O /tmp/ampache.tar.gz
+tar xvzf /tmp/ampache.tar.gz -C /var/www/
+chown -R www-data:www-data /var/www/ampache-master
+#Change MySQL Root Account
+mysqladmin -u root password root
+#Mysql ampache user & permissions are appended in ampachedump.sql rather than being passed through bash
+
+#Change Apache2 Default Web Dir - we don't fully understand other methods to accomplish this
+sed -i "s|/var/www|/var/www/ampache-master/|" /etc/apache2/sites-available/default
+/etc/init.d/apache2 reload
+#import database
+#mysql -u root -proot < /var/www/ampache/www/sql/ampachedump.sql
+
+#Symbolic Link for ampache.cfg.php
+#mkdir /etc/ampache
+#ln -s /etc/ampache/ampache.cfg.php /usr/share/ampache/www/config/ampache.cfg.php
+
+# Configure samba share
+echo "[media]" >> /etc/samba/smb.conf
+echo "     writeable = yes" >> /etc/samba/smb.conf
+echo "     public = yes" >> /etc/samba/smb.conf
+echo "     path = $share" >> /etc/samba/smb.conf
+#Stop MySQL Server
+/etc/init.d/mysql stop
+#Stop Apache Server
+/etc/init.d/apache2 stop
