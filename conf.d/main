@@ -19,7 +19,7 @@ mkdir $share
 chmod 777 $share
 
 #Change MySQL Root Account
-mysqladmin -u root password root
+mysqladmin -u root password $MYSQL_PASS
 
 # setup the database
 MYSQL_BATCH="mysql --user=root --password=$MYSQL_PASS --batch"
@@ -40,7 +40,7 @@ a2ensite ampache
 /etc/init.d/apache2 reload
 
 #Ampache DB Install
-php /var/www/ampache/bin/install/install_db.inc -U $root -P $MYSQL_PASS -h localhost -d $DB_NAME -w /var/www/ampache -u $DB_USER -p $DB_PASS
+php /var/www/ampache/bin/install/install_db.inc -U root -P $MYSQL_PASS -h localhost -d $DB_NAME -w /var/www/ampache -u $DB_USER -p $DB_PASS -f
 mysql --user=root --password=$MYSQL_PASS -D ampache -e "UPDATE preference SET value = 'Fresh' where id = 33;"
 #Symbolic Link for ampache.cfg.php
 #mkdir /etc/ampache
