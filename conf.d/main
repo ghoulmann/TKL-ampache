@@ -43,6 +43,8 @@ a2ensite ampache
 php /var/www/ampache/bin/install/install_db.inc -U root -P $MYSQL_PASS -h localhost -d $DB_NAME -u $DB_USER -p $DB_PASS -f
 #mysql --user=root --password=$MYSQL_PASS -D ampache -e "UPDATE preference SET value = 'Fresh' where id = 33;"
 mysql --user=root --password=$MYSQL_PASS -D ampache -e "UPDATE user_preference SET value = 'fresh' WHERE preference = 33;"
+#Set admin password until firstboot
+
 #Symbolic Link for ampache.cfg.php
 #mkdir /etc/ampache
 #ln -s /etc/ampache/ampache.cfg.php /usr/share/ampache/www/config/ampache.cfg.php
@@ -54,6 +56,10 @@ echo "[media]" >> /etc/samba/smb.conf
 echo "     writeable = yes" >> /etc/samba/smb.conf
 echo "     public = yes" >> /etc/samba/smb.conf
 echo "     path = $share" >> /etc/samba/smb.conf
+
+#Creat Ampache user
+php "/var/www/ampache/bin/install/add_user.inc" -u admin -p c0ff33 -l admin
+
 #Stop MySQL Server
 /etc/init.d/mysql stop
 #Stop Apache Server
