@@ -28,7 +28,7 @@ def main():
 
     email = ""
     password = ""
-    adduser="/var/www/ampache/bin/install/ampache_user.sh"
+    adduser="/var/www/ampache/bin/install/add_user.inc"
 
     for opt, val in opts:
         if opt in ('-h', '--help'):
@@ -52,8 +52,7 @@ def main():
             "Enter an email address for the Ampache 'admin' account.",
             "admin@example.com")
 
-    subprocess.call(["php", "/var/www/ampache/bin/install/add_user.inc", "-u admin", "-l Admin", "-p " + password, "-e " + email])
-
+    subprocess.call(["php", "/var/www/ampache/bin/install/add_user.inc", "-ladmin", "-uadmin", "-p" + password, "-e" +  email])
 
 if __name__ == "__main__":
     main()
