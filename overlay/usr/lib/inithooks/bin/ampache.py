@@ -52,7 +52,7 @@ def main():
             "Enter an email address for the Ampache 'admin' account.",
             "admin@example.com")
 
-    subprocess.call(["php", "/var/www/ampache/bin/install/add_user.inc", "-u admin", "-l admin", "-p " + password, "-e " + email])
+    subprocess.call(["php", "/var/www/ampache/bin/install/add_user.inc", "-u admin", "-l Admin", "-p " + password, "-e " + email])
 
 
 if __name__ == "__main__":
