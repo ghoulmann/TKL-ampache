@@ -41,7 +41,7 @@ a2ensite ampache
 
 #Ampache DB Install
 php /var/www/ampache/bin/install/install_db.inc -U $root -P $MYSQL_PASS -h localhost -d $DB_NAME -w /var/www/ampache -u $DB_USER -p $DB_PASS
-mysql --user=root --password=$MYSQL_PASS -D ampache -e "UPDATE preference SET value = 'fresh' where id = 33;"
+mysql --user=root --password=$MYSQL_PASS -D ampache -e "UPDATE preference SET value = 'Fresh' where id = 33;"
 #Symbolic Link for ampache.cfg.php
 #mkdir /etc/ampache
 #ln -s /etc/ampache/ampache.cfg.php /usr/share/ampache/www/config/ampache.cfg.php
