@@ -58,7 +58,7 @@ echo "     public = yes" >> /etc/samba/smb.conf
 echo "     path = $share" >> /etc/samba/smb.conf
 
 #Creat Ampache user
-php "/var/www/ampache/bin/install/add_user.inc" -u admin -p turnkey -l admin
+php "/var/www/ampache/bin/install/add_user.inc" -u admin -p $DB_PASS -l admin
 
 #Stop MySQL Server
 /etc/init.d/mysql stop
